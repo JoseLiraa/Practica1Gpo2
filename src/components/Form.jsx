@@ -1,28 +1,29 @@
 import React, {useState} from 'react';
 import Todo from '../components/Todo';
+
+
+
 const Form = () => {
-    const [toda, setToda] = useState(0)
-    const [todo, setTodo] = useState("")
+
+    const [canti, setCanti] = useState(0)
+    const [produ, setProdu] = useState('')
     const [todos, setTodos] = useState([])
     
-    const handleChangee = e => setToda({[e.target.name]:e.target.value})
-    const handleChange = e => setTodo({[e.target.name]:e.target.value})
-     const handleClick = e => {
-        if(Object.keys(todo).length ===0 || todo.todo.trim() === ''){
-            alert('El campo no puede estar vacio')
-            return
-        }
-        setTodos([...todos,todo])
-    }
-     
-     const handleClickk = e => {
-        if(Object.keys(toda).length ===0 || toda.toda.trim() === ''){
-            alert('El campo no puede estar vacio')
-            return
-        }
-       
-        setTodos([...todos,toda,todo])
-    }
+    const productoAgregar = (e) => {
+        e.preventDefault();
+        if(produ.trim() ==='' || canti < 1){
+            alert('Los campos no pueden estar vacio. Agregue una cantidad y producto')
+            return;
+        }        
+    
+
+    const todoLista = {canti,produ}
+    let totalLista = [...todos];
+    totalLista.push(todoLista);
+    setTodos(totalLista);
+    };
+           
+ 
     const deleteTodo = indice => {
         const newTodos = [...todos] 
         newTodos.splice(indice,1)
@@ -30,15 +31,17 @@ const Form = () => {
     }
 return (
     <>
-        <form onSubmit= {e=> e.preventDefault()}>
-            <label>Agregar tarea</label><br />
-            
-            <input type="text" name="toda" onChange={handleChangee}/>
-            <input type="text" name="todo" onChange={handleChange}/>
-            <button onClick={handleClick && handleClickk}>agregar</button>            
+        <form onSubmit= {productoAgregar}>
+            <h3>Compras del supermercado</h3><br />             
+            <label>Cantidad:</label> 
+            <input type="number" placeholder="ej:8" name="canti" value={canti} onChange={(e) => setCanti(parseInt(e.target.value,10))}/>               
+            <label>Producto:</label>        
+            <input type="text" placeholder="ej:Manzana" name="produ" value={produ} onChange={(e) => setProdu(e.target.value)}/>
+            <br />
+            <input className="boton" type="submit" value="Agregar a la lista" />                        
         </form>
         {
-            todos.map((value,index)=> (<Todo todo={value.todo} toda={value.toda} key={index} index={index} deleteTodo={deleteTodo}/>))
+            todos.map((value,index)=> (<Todo canti={value.canti} produ={value.produ} key={index} index={index} deleteTodo={deleteTodo}/>))
         }
 
     </>

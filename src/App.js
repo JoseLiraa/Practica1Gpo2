@@ -6,7 +6,7 @@ return (
 <div className="App">
 <div className="App-content">
 <p>
-Aquí haremos nuestro TO-DO list
+Discusión de resultados
 </p>
 <Form />
 </div>
